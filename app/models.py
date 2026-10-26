@@ -20,7 +20,7 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
-    wallets: Mapped[list["Wallet"]] = relationship(
+    wallets: Mapped[list[Wallet]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
     )
 
@@ -37,4 +37,4 @@ class Wallet(Base):
     )
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
-    user: Mapped["User"] = relationship(back_populates="wallets")
+    user: Mapped[User] = relationship(back_populates="wallets")

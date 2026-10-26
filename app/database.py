@@ -23,7 +23,7 @@ async_session_factory = async_sessionmaker(
 
 
 # Зависимости
-async def get_session() -> AsyncGenerator[AsyncSession, None]:
+async def get_session() -> AsyncGenerator[AsyncSession]:
     """Выдает сессию БД для запроса и закрывает её после."""
     async with async_session_factory() as session:
         yield session
