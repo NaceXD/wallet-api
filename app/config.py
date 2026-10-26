@@ -6,8 +6,8 @@ from sqlalchemy import URL
 
 
 class Settings(BaseSettings):
-    APP_ENV: str
-    APP_DEBUG: bool
+    APP_ENV: str = "dev"
+    APP_DEBUG: bool = True
 
     POSTGRES_USER: str
     POSTGRES_PASSWORD: SecretStr
@@ -16,11 +16,11 @@ class Settings(BaseSettings):
     POSTGRES_PORT: int
 
     JWT_SECRET: SecretStr
-    JWT_ALG: str
-    JWT_EXPIRES_MIN: int
+    JWT_ALG: str = "HS256"
+    JWT_EXPIRES_MIN: int = 30
 
-    LOGIN_RATE_LIMIT: int
-    LOGIN_RATE_WINDOW_SEC: int
+    LOGIN_RATE_LIMIT: int = 5
+    LOGIN_RATE_WINDOW_SEC: int = 60
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
