@@ -1,0 +1,16 @@
+alembic==1.20.1
+fastapi==0.162.0
+uvicorn[standard]
+sqlalchemy[asyncio]
+asyncpg==0.32.0
+pydantic[email]
+pydantic-settings==2.16.1
+pyjwt==2.15.1
+pwdlib[argon2]
+
+pytest==9.1.1
+pytest-asyncio==1.4.1
+httpx==0.28.1
+ruff==0.17.2
+black==26.10.1
+isort==9.0.2
