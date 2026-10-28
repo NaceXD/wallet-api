@@ -1,6 +1,7 @@
 """FastAPI зависимости"""
 
 from typing import Annotated
+from uuid import UUID
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -28,8 +29,11 @@ async def get_current_user(
 
     try:
         payload = decode_token(token=token)
-        user_id = payload.get("sub")
-    except (InvalidTokenError, TokenIsExpiredError) as err:
+        sub = payload.get("sub")
+        if not sub:
+            raise credentials_exception
+        user_id = UUID(sub)
+    except (InvalidTokenError, TokenIsExpiredError, ValueError) as err:
         raise credentials_exception from err
 
     stmt = select(User).where(User.id == user_id)

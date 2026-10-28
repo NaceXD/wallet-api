@@ -39,13 +39,13 @@ async def login(
         client_ip = request.client.host
     else:
         client_ip = "unknown"
-    if not login_limiter.is_allowed(f"ip: {client_ip}"):
+    if not login_limiter.is_allowed(f"ip:{client_ip}"):
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail="Слишком много запросов",
             headers={"Retry-After": str(login_limiter.get_retry_after(f"ip:{client_ip}"))},
         )
-    if not login_limiter.is_allowed(f"email: {form_data.username}"):
+    if not login_limiter.is_allowed(f"email:{form_data.username}"):
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail="Слишком много запросов",
