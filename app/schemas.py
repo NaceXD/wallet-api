@@ -49,6 +49,15 @@ class OperationRequest(BaseModel):
     amount: Decimal = Field(gt=0, max_digits=18, decimal_places=2)
 
 
+class OperationResponse(BaseModel):
+    """Схема возвращение баланса после операции"""
+
+    id: UUID
+    balance: Decimal
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 class WalletResponse(BaseModel):
     """Информация о кошельке."""
 

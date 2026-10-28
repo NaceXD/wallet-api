@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_session
 from app.dependencies import get_current_user
 from app.models import User
-from app.schemas import OperationRequest, WalletCreateResponse, WalletResponse
+from app.schemas import OperationRequest, OperationResponse, WalletCreateResponse, WalletResponse
 from app.services.wallet_service import apply_operation, create_wallet, get_wallet
 
 router = APIRouter(prefix="/wallets", tags=["wallets"])
@@ -35,7 +35,7 @@ async def wallet_get(
 
 
 @router.post(
-    "/{wallet_id}/operation", response_model=WalletResponse, status_code=status.HTTP_200_OK
+    "/{wallet_id}/operation", response_model=OperationResponse, status_code=status.HTTP_200_OK
 )
 async def wallet_operation(
     wallet_id: UUID,
@@ -44,11 +44,11 @@ async def wallet_operation(
     session: Annotated[AsyncSession, Depends(get_session)],
 ):
     """Применяет Deposit или Withdraw к кошельку"""
-    await apply_operation(
+    new_balance = await apply_operation(
         session=session,
         user_id=current_user.id,
         wallet_id=wallet_id,
         operation_type=payload.operation_type,
         amount=payload.amount,
     )
-    return await get_wallet(session=session, user_id=current_user.id, wallet_id=wallet_id)
+    return {"id": wallet_id, "balance": new_balance}

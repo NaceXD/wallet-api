@@ -27,7 +27,7 @@ async def get_wallet(session: AsyncSession, user_id: UUID, wallet_id: UUID) -> W
     wallet = result.scalar_one_or_none()
 
     if wallet is None:
-        raise WalletNotFoundError
+        raise WalletNotFoundError()
 
     return wallet
 
@@ -66,10 +66,11 @@ async def apply_operation(
         exists = await session.scalar(
             select(Wallet.id).where(Wallet.id == wallet_id, Wallet.user_id == user_id)
         )
+        await session.rollback()
         if exists is None:
-            raise WalletNotFoundError
+            raise WalletNotFoundError()
         else:
-            raise InsufficientFundsError
+            raise InsufficientFundsError()
 
     await session.commit()
 
