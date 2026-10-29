@@ -95,7 +95,7 @@ async def test_login_rate_limit(client):
     ],
 )
 async def test_register_invalid_data(client, email, password):
-    """Pidantic должен вернуть 422 при невалидных данных"""
+    """Pydantic должен вернуть 422 при невалидных данных"""
     response = await client.post(
         "/api/v1/auth/register", json={"email": email, "password": password}
     )
