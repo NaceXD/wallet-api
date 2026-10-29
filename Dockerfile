@@ -27,6 +27,7 @@ COPY --from=builder /opt/venv /opt/venv
 COPY app/ ./app/
 COPY alembic/ ./alembic/
 COPY alembic.ini .
+COPY tests/ ./tests/
 COPY pyproject.toml .
 
 RUN chown -R appuser:appuser /app
