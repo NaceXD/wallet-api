@@ -15,7 +15,7 @@
 ## Запуск
 1. Клонируйте репозиторий:
 ```bash
-git clone <https://github.com/NaceXD/wallet-api>
+git clone https://github.com/NaceXD/wallet-api
 cd wallet-api
 ```
 2. Создайте файл .env из шаблона:
